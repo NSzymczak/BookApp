@@ -19,7 +19,7 @@ public class GoogleBooksApiClient(HttpClient httpClient) : IGoogleBooksApiClient
             }),
             configureRestClient: c => c.ThrowOnDeserializationError = true);
 
-    public const string ApiKey = "AIzaSyAmBIeToMSOBZEC7wY4dPdKUk-Q-EwMh5Q";
+    public const string ApiKey = "xxx";
 
     public async Task<List<VolumeInfo>?> SearchBooksAsync(string searchText)
     {
