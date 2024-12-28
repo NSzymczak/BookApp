@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BookApp.Pages.AddOpinion.AddOpinionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:language="clr-namespace:BookApp.Resources.Language"
+    xmlns:pageModel="clr-namespace:BookApp.Pages.AddOpinion"
+    xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="pageModel:AddOpinionPageModel"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+    <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDark}}">
+        <VerticalStackLayout Margin="30" Spacing="10">
+            <Label
+                Margin="30,10"
+                FontSize="20"
+                Text="{x:Static language:AppResource.AddYourOpinion}" />
+
+            <Label Text="{x:Static language:AppResource.DateOfReading}" />
+            <DatePicker Date="{Binding DateOfReading}" />
+
+            <Label Text="{x:Static language:AppResource.Rate}" />
+            <Slider
+                Maximum="10"
+                Minimum="0"
+                Value="{Binding Rate}" />
+
+            <Label Text="{x:Static language:AppResource.Comment}" VerticalOptions="Center" />
+            <Editor HeightRequest="200" Text="{Binding Comment}" />
+            <HorizontalStackLayout>
+                <Button Command="{Binding AddOpinionCommand}" Text="{x:Static language:AppResource.Add}" />
+                <Button Command="{Binding BackCommand}" Text="{x:Static language:AppResource.Back}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

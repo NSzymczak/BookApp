@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BookApp.Pages.Shelf.ShelfPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:language="clr-namespace:BookApp.Resources.Language"
+    xmlns:model="clr-namespace:BookApp.Models"
+    xmlns:pageModel="clr-namespace:BookApp.Pages.Shelf"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="pageModel:ShelfPageModel"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding LoadCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <Grid>
+        <CollectionView Margin="20,30" ItemsSource="{Binding ReadBooks}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="3" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Book">
+                    <VerticalStackLayout Margin="5">
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="150"
+                            Source="{Binding CoverImage, Converter={StaticResource ByteArrayToImageSourceConverter}}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding OpenOpinionsCommand, Source={RelativeSource AncestorType={x:Type pageModel:ShelfPageModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label Text="{Binding Title}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsVisible="{Binding ReadBooks, Converter={StaticResource IsListNullOrEmptyConverter}}"
+            VerticalOptions="Center">
+            <Image Scale="3" Source="book.png" />
+            <Label
+                Margin="30"
+                HorizontalTextAlignment="Center"
+                Text="{x:Static language:AppResource.Placeholder_Shelf}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BookApp.Pages.Search.SearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:language="clr-namespace:BookApp.Resources.Language"
+    xmlns:model="clr-namespace:BookApp.Models"
+    xmlns:pageModel="clr-namespace:BookApp.Pages.Search"
+    x:DataType="pageModel:SearchPageModel"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="auto,*">
+
+        <Frame
+            Grid.Row="0"
+            Margin="20,40"
+            Padding="0"
+            BackgroundColor="{AppThemeBinding Light={StaticResource OffWhite},
+                                              Dark={StaticResource OffBlack}}"
+            BorderColor="{AppThemeBinding Light={StaticResource OffWhite},
+                                          Dark={StaticResource OffBlack}}">
+            <SearchBar
+                Grid.Row="0"
+                SearchCommand="{Binding SearchCommand}"
+                Text="{Binding SearchText}" />
+        </Frame>
+
+        <CollectionView
+            Grid.Row="1"
+            Margin="20,0"
+            ItemsSource="{Binding Books}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Book">
+                    <Frame Margin="0,5" Padding="5">
+                        <VerticalStackLayout Grid.Column="1" Margin="10,0">
+                            <Label FontSize="20" Text="{Binding Title}" />
+                            <Label LineBreakMode="TailTruncation" Text="{Binding AuthorsName}" />
+                            <Label Text="{Binding ISBN}" />
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding BookDetails, Source={RelativeSource AncestorType={x:Type pageModel:SearchPageModel}}}"
+                                CommandParameter="{Binding .}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsVisible="{Binding Books, Converter={StaticResource IsListNullOrEmptyConverter}}"
+            VerticalOptions="Center">
+            <Image Scale="3" Source="add.png" />
+            <Label
+                Margin="30"
+                HorizontalTextAlignment="Center"
+                Text="{x:Static language:AppResource.Placeholder_Search}" />
+        </VerticalStackLayout>
+
+        <BoxView
+            Grid.RowSpan="2"
+            BackgroundColor="#22000000"
+            IsVisible="{Binding IsBusy}" />
+        <ActivityIndicator
+            Grid.Row="1"
+            HeightRequest="100"
+            IsRunning="true"
+            IsVisible="{Binding IsBusy}" />
+    </Grid>
+</ContentPage>

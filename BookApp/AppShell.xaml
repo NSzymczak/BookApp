@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BookApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bookDetails="clr-namespace:BookApp.Pages.BookDetails"
+    xmlns:language="clr-namespace:BookApp.Resources.Language"
+    xmlns:search="clr-namespace:BookApp.Pages.Search"
+    xmlns:shelf="clr-namespace:BookApp.Pages.Shelf"
+    Shell.FlyoutBehavior="Disabled">
+
+    <TabBar>
+        <Tab Title="{x:Static language:AppResource.Search}" Icon="search">
+            <ShellContent ContentTemplate="{DataTemplate search:SearchPage}" Route="ShelfPage" />
+        </Tab>
+        <Tab Title="{x:Static language:AppResource.Bookshelf}" Icon="book">
+            <ShellContent ContentTemplate="{DataTemplate shelf:ShelfPage}" Route="ShelfPage" />
+        </Tab>
+    </TabBar>
+</Shell>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BookApp.Pages.BookDetails.BookDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:language="clr-namespace:BookApp.Resources.Language"
+    xmlns:pageModel="clr-namespace:BookApp.Pages.BookDetails"
+    x:DataType="pageModel:BookDetailsPageModel"
+    Shell.NavBarIsVisible="True"
+    Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid BackgroundColor="{StaticResource OffWhite}">
+                <Image
+                    Margin="0,30,0,20"
+                    HeightRequest="200"
+                    Source="{Binding Book.CoverImage, Converter={StaticResource ByteArrayToImageSourceConverter}}" />
+            </Grid>
+            <Label
+                Margin="10,10,10,0"
+                FontSize="30"
+                HorizontalOptions="Center"
+                LineBreakMode="TailTruncation"
+                Text="{Binding Book.Title}" />
+            <Label
+                Margin="10,0"
+                HorizontalOptions="Center"
+                LineBreakMode="WordWrap"
+                Text="{Binding Book.AuthorsName}" />
+            <Label
+                Margin="0,0,0,10"
+                HorizontalOptions="Center"
+                Text="{Binding Book.ISBN}" />
+            <Label
+                Margin="0,0,0,10"
+                HorizontalOptions="Center"
+                Text="{Binding Book.PublishedOn, StringFormat='{0:dd/MM/yyyy}'}" />
+            <Button
+                Command="{Binding CheckReadedCommand}"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsBookReaded, Converter={StaticResource InvertedBoolConverter}}"
+                Text="{x:Static language:AppResource.AddToRead}" />
+            <Button
+                Command="{Binding CheckReadedCommand}"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsBookReaded}"
+                Text="{x:Static language:AppResource.SeeYourOpinions}" />
+            <Label Margin="20,10" Text="{Binding Book.Description}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

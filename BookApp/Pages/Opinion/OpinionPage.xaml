@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BookApp.Pages.Opinion.OpinionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:language="clr-namespace:BookApp.Resources.Language"
+    xmlns:model="clr-namespace:BookApp.Models"
+    xmlns:pageModel="clr-namespace:BookApp.Pages.Opinion"
+    x:DataType="pageModel:OpinionPageModel"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+    <Grid Margin="0,30,0,0" RowDefinitions="*,auto">
+        <CollectionView ItemsSource="{Binding Opinions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Opinion">
+                    <Frame Margin="20,10" Padding="5">
+                        <VerticalStackLayout>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{x:Static language:AppResource.DateOfReading}" />
+                                        <Span Text=": " />
+                                        <Span FontAttributes="Bold" Text="{Binding ReadDate, StringFormat='{0:dd/MM/yyyy}'}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{x:Static language:AppResource.Rate}" />
+                                        <Span Text=": " />
+                                        <Span FontAttributes="Bold" Text="{Binding Rate}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="{x:Static language:AppResource.Comment}" />
+                            <Label Text="{Binding Comment}" />
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding DeleteOpinionCommand, Source={RelativeSource AncestorType={x:Type pageModel:OpinionPageModel}}}"
+                                CommandParameter="{Binding .}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <HorizontalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            Spacing="10">
+            <Button Command="{Binding AddOpinionCommand}" Text="{x:Static language:AppResource.AddNewOpinion}" />
+            <Button Command="{Binding BackCommand}" Text="{x:Static language:AppResource.Back}" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
